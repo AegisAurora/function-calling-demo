@@ -32,7 +32,6 @@ class FunctionCallingAgent(Workflow):
         self.tools = tools or []
 
         self.llm = llm or OpenAI()
-        assert self.llm.metadata.is_function_calling_model
 
         self.memory = ChatMemoryBuffer.from_defaults(llm=llm)
         self.sources = []
@@ -80,7 +79,6 @@ class FunctionCallingAgent(Workflow):
 
         tool_msgs = []
 
-        # call tools -- safely!
         for tool_call in tool_calls:
             tool = tools_by_name.get(tool_call.tool_name)
             additional_kwargs = {
